@@ -1,5 +1,9 @@
 package dataSort
 
+// 归并排序
+// 空间复杂度 1
+// 时间复杂度 nlog(n)
+
 func MergeSort(s []int, lft, rht int){
 	if lft == rht{
 		return
