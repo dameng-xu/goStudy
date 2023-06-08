@@ -2,13 +2,14 @@ package heap
 
 import "fmt"
 
-type MaxHeap []int
+type MinHeap []int
 
-func (h *MaxHeap) shitUp(pos, ePos int) {
+// shitUp 小根堆上浮操作
+func (h *MinHeap) shitUp(pos, ePos int) {
 	item := (*h)[pos]
 	for pos > ePos {
 		pPos := (pos - 1) >> 1
-		if pPos >= ePos && (*h)[pPos] < item {
+		if pPos >= ePos && (*h)[pPos] > item {
 			(*h)[pos] = (*h)[pPos]
 			pos = pPos
 		} else {
@@ -18,15 +19,16 @@ func (h *MaxHeap) shitUp(pos, ePos int) {
 	(*h)[pos] = item
 }
 
-func (h *MaxHeap) shitDown(pos, ePos int) {
+// shitDown 小根堆下窜操作
+func (h *MinHeap) shitDown(pos, ePos int) {
 	item := (*h)[pos]
 	for pos < ePos {
 		cPos := pos<<1 + 1
 		rcPos := cPos + 1
-		if rcPos <= ePos && (*h)[cPos] < (*h)[rcPos] {
+		if rcPos <= ePos && (*h)[rcPos] < (*h)[cPos] {
 			cPos = rcPos
 		}
-		if cPos <= ePos && (*h)[cPos] > item {
+		if cPos <= ePos && (*h)[cPos] < item {
 			(*h)[pos] = (*h)[cPos]
 			pos = cPos
 		} else {
@@ -36,12 +38,12 @@ func (h *MaxHeap) shitDown(pos, ePos int) {
 	(*h)[pos] = item
 }
 
-func (h *MaxHeap) Push(item int) {
+func (h *MinHeap) Push(item int) {
 	*h = append(*h, item)
 	h.shitUp(len(*h)-1, 0)
 }
 
-func (h *MaxHeap) Pop() int {
+func (h *MinHeap) Pop() int {
 	if len(*h) == 0 {
 		return 0
 	}
@@ -52,6 +54,6 @@ func (h *MaxHeap) Pop() int {
 	return item
 }
 
-func (h *MaxHeap) List() {
+func (h *MinHeap) List() {
 	fmt.Println(*h)
 }

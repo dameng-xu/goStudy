@@ -1,34 +1,22 @@
 package main
 
 import (
-	"github.com/dameng-xu/goStudy/dataStruct/heap"
+	"fmt"
+	"github.com/dameng-xu/goStudy/dataStruct/linkList"
 )
 
 func main() {
-	var h heap.Heap
-	h.Pop()
-	h.List()
-	h.Push(101)
-	h.Push(99)
-	h.Push(11)
-	h.Push(1)
-	h.Push(92)
-	h.Push(1000)
-	h.Push(12781)
-	h.Push(28)
-	h.List()
-	h.Push(8202)
-	h.List()
-	h.Pop()
-	h.List()
-	h.Pop()
-	h.List()
-	h.Push(8202)
-	h.List()
-	h.Push(8202)
-	h.List()
-	h.Push(8202)
-	h.List()
-	h.Pop()
-	h.List()
+	var l linkList.LinkList
+	l.Append(1)
+	l.Append(2)
+	l.Append(3)
+	l.Append(4)
+	l.Append(5)
+	l.Append(6)
+	l.Append(7)
+	l.Add(0)
+	l.Insert(5, 10000)
+	l.Insert(0, 20000)
+	l.PrintList()
+	fmt.Println(l.Length())
 }

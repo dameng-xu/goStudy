@@ -2,65 +2,88 @@ package linkList
 
 import "fmt"
 
-type SingleNode struct {
-	Data	int
-	Next 	*SingleNode
+type Node struct {
+	Value interface{}
+	Next  *Node
 }
 
-type SingleLinkList struct {
-	Head	*SingleNode
+type LinkList struct {
+	Head *Node
 }
 
-func (s *SingleLinkList) Add(d int)  {
-	node := SingleNode{Data: d}
-	head := s.Head
-	if head == nil{
-		s.Head = &node
-	}else {
-		for head.Next != nil{
-			head = head.Next
-		}
-		head.Next = &node
+func (l *LinkList) Append(value int) {
+	newNode := Node{
+		Value: value,
+		Next:  nil,
 	}
+	if l.Head == nil {
+		l.Head = &newNode
+		return
+	}
+	lastNode := l.Head
+	for lastNode.Next != nil {
+		lastNode = lastNode.Next
+	}
+	lastNode.Next = &newNode
+	return
 }
 
-func (s *SingleLinkList) Travel()  {
-	head := s.Head
-	for head != nil{
-		fmt.Println(head.Data)
-		head = head.Next
+func (l *LinkList) Add(value int) {
+	newNode := Node{
+		Value: value,
+		Next:  nil,
 	}
+
+	head := l.Head
+	if head == nil {
+		l.Head = &newNode
+		return
+	}
+	newNode.Next = head
+	l.Head = &newNode
+	return
 }
 
-func (s *SingleLinkList) Reverse()  {
-	var pre *SingleNode
-	var next *SingleNode
-
-	head := s.Head
-	for head != nil{
-		next = head.Next
-		head.Next = pre
-		pre = head
-		head = next
+func (l *LinkList) Insert(index, value int) {
+	if index < 0 || l.Length() < index {
+		return
 	}
-	s.Head = pre
+	if index == 0 {
+		l.Add(value)
+		return
+	}
+	newNode := Node{
+		Value: value,
+		Next:  nil,
+	}
+	curNode := l.Head
+	curIndex := 1
+	for curIndex < index {
+		curNode = curNode.Next
+		curIndex++
+	}
+	newNode.Next = curNode.Next
+	curNode.Next = &newNode
+	return
 }
 
-func (s *SingleLinkList) Delete(d int)  {
-	head := s.Head
-	for head != nil && head.Data == d{
-		head = head.Next
+func (l *LinkList) Length() int {
+	var length int
+	curNode := l.Head
+	for curNode != nil {
+		length++
+		curNode = curNode.Next
 	}
-	s.Head = head
+	return length
+}
 
-	cur := head
-	next := head
-	for next != nil{
-		if next.Data == d{
-			cur.Next = next.Next
-		}else{
-			cur = next
-		}
-		next = next.Next
+func (l *LinkList) PrintList() {
+	currentNode := l.Head
+
+	fmt.Print("LinkedList: ")
+	for currentNode != nil {
+		fmt.Printf("%d -> ", currentNode.Value)
+		currentNode = currentNode.Next
 	}
+	fmt.Println("null")
 }
